@@ -61,5 +61,3 @@ project is licensed under:
     </td>
   </tr>
 </table>
-
-<br>
