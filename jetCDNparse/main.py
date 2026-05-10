@@ -55,7 +55,7 @@ def main(args: list[str] | None = None) -> None:
     env.read_env()
 
     min_sync_delay: timedelta = env.timedelta(
-        'MIN_UPDATE_INTERVAL',
+        'MIN_SYNC_DELAY',
         default=timedelta(hours=12),
     )
     user_agent: str = env(
@@ -66,6 +66,7 @@ def main(args: list[str] | None = None) -> None:
             'Chrome/147.0.0.0 Safari/537.36'
         ),
     )
+    static_prefix: str = env('STATIC_PREFIX', default='')
 
     # logging
     logging.basicConfig(level=logging.DEBUG if options.verbose else logging.INFO)
@@ -113,9 +114,10 @@ def main(args: list[str] | None = None) -> None:
         logger.info('used backup file, since the minimum delay time has not passed')
 
     global_context = {
-        'links_start': LINKS_NAME,
         'timestamp': last_sync or datetime.now(tz=UTC).strftime(TIME_FORMAT),
         'res_dir_name': RES_NAME,
+        'static_prefix': static_prefix,
+        'links_start': LINKS_NAME,
     }
 
     # pre-compile
@@ -164,4 +166,3 @@ def main(args: list[str] | None = None) -> None:
 
 if __name__ == '__main__':
     main()
-
