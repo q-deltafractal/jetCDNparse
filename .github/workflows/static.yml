@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  compile:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -29,13 +29,6 @@ jobs:
   
       - name: compile
         run: cd jetCDNparse && uv run main.py --verbose
-  
-  deploy:
-    needs: compile
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
 
       - name: out deploy
         uses: peaceiris/actions-gh-pages@v4
