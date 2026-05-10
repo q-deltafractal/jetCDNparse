@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <ul class="list folders">
-    {% for name in names %}
-      <li><a href="/{{ links_start }}/{{ name }}.html">{{ name }}</a></li>
-    {% endfor %}
-  </ul>
-{% endblock %}
