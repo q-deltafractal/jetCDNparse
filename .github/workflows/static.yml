@@ -25,7 +25,7 @@ jobs:
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
   
       - name: setup dependencies
-        run: uv sync --locked --all-extras
+        run: uv sync --all-extras
   
       - name: compile
         run: cd jetCDNparse && uv run main.py --verbose
