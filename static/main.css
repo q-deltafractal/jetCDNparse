@@ -1,0 +1,63 @@
+:root {
+    --background: #171717;
+    --text: #f1fff2;
+    --border: rgba(255, 255, 255, 0.2);
+
+    --primary: #5d98e0;
+}
+
+html {
+    background: var(--background);
+    color: var(--text);
+
+    font-family: monospace, serif;
+}
+
+body {
+    padding: 10px;
+}
+
+a {
+    color: var(--text);
+}
+
+.p1 {
+    color: var(--primary);
+}
+
+.o5 {
+    opacity: 50%;
+}
+
+p.info:before {
+    content: ">> ";
+    color: var(--primary);
+}
+
+
+ul.list {
+    list-style-type: none;
+    margin: 40px 0 0 0;
+    padding: 0;
+}
+
+ul.list > li {
+    padding: 20px 20px 20px 45px;
+    border-top: 1px solid var(--border);
+}
+
+ul.list > li:before {
+    position: absolute;
+    margin-left: -25px;
+    content: "";
+    width: 16px;
+    height: 16px;
+}
+
+ul.list.folders > li:before {
+    background: url("pictures/viewfolder.png") no-repeat left top;
+}
+
+ul.list.links > li {
+    margin-bottom: 20px;
+}
