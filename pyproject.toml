@@ -12,5 +12,9 @@ dependencies = [
     "jinja2>=3.1.6",
 ]
 
+[project.urls]
+Repository = "https://github.com/q-deltafractal/jetCDNparse"
+Issues = "https://github.com/q-deltafractal/jetCDNparse/issues"
+
 [tool.ruff.format]
 quote-style = 'single'
