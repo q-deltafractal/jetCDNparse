@@ -23,14 +23,16 @@ _latest versions_
 ### preparation
 
 ```bash
+git clone https://github.com/q-deltafractal/jetCDNparse.git
+cd jetCDNparse
+```
+
+```bash
 # setup virtual env
 uv sync
 ```
 
-```bash
-# setup configuration project
-cp template.env .env
-```
+_now change the parser configuration in the [`config.toml`](config.toml) file to suit your needs_
 
 ### compilation
 
@@ -39,7 +41,7 @@ $ cd jetCDNparse
 $ uv run main.py
 INFO:jetCDNparse:booted
 ...
-INFO:jetCDNparse:compilation success on ~/.../jetCDNparse/dist
+INFO:jetCDNparse:compilation success on /home/.../jetCDNparse/dist
 ```
 
 <br>

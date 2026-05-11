@@ -2,13 +2,13 @@
 
 import argparse
 from datetime import datetime, timedelta, UTC
+import tomllib
 import json
 import shutil
 import logging
 from pathlib import Path
 
 import httpx
-from environs import Env
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 PROJECT_NAME = 'jetCDNparse'
@@ -39,37 +39,34 @@ jinja_env = Environment(
 )
 
 
-def main(args: list[str] | None = None) -> None:
+def main() -> None:
     """main logic"""
+
+    # config
+    with open(CONFIG_DIR / 'config.toml', 'rb') as f:
+        config: dict = {
+            key.replace('-', '_'): item
+            for key, item in (tomllib.load(f).get(PROJECT_NAME, dict()).items())
+        }
 
     # parser
     parser = argparse.ArgumentParser(prog=PROJECT_NAME)
 
     parser.add_argument('-f', '--force', action='store_true', help='force API sync')
     parser.add_argument('-v', '--verbose', action='store_true', help='verbose logging')
+    parser.add_argument('--min-sync-delay-minutes', type=int)
+    parser.add_argument('--static-prefix')
+    parser.add_argument('--user-agent')
 
-    options = parser.parse_args(args)
-
-    # env
-    env = Env(expand_vars=True)
-    env.read_env()
-
-    min_sync_delay: timedelta = env.timedelta(
-        'MIN_SYNC_DELAY',
-        default=timedelta(hours=12),
+    config.update(filter(lambda a: a[1] is not None, vars(parser.parse_args()).items()))
+    config['min_sync_delay_minutes'] = timedelta(
+        minutes=config.get('min_sync_delay_minutes', 0)
     )
-    user_agent: str = env(
-        'USER_AGENT',
-        default=(
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-            'AppleWebKit/537.36 (KHTML, like Gecko) '
-            'Chrome/147.0.0.0 Safari/537.36'
-        ),
-    )
-    static_prefix: str = env('STATIC_PREFIX', default='')
+    config['static_prefix'] = config.get('static_prefix', '')
+    config['user_agent'] = config.get('user_agent', httpx._client.USER_AGENT)
 
     # logging
-    logging.basicConfig(level=logging.DEBUG if options.verbose else logging.INFO)
+    logging.basicConfig(level=logging.DEBUG if config['verbose'] else logging.INFO)
 
     logger.info('booted')
 
@@ -84,16 +81,19 @@ def main(args: list[str] | None = None) -> None:
             json_data = dump.get('data', dict())
 
     if (
-        options.force
+        config['force']
         or not last_sync
-        or (last_sync + min_sync_delay - timedelta(minutes=1) < datetime.now(tz=UTC))
+        or (
+            last_sync + config['min_sync_delay_minutes'] - timedelta(minutes=1)
+            < datetime.now(tz=UTC)
+        )
     ):
         logger.info('making request')
 
         r = httpx.get(
             url='https://data.services.jetbrains.com/products',
             params={'fields': ['name', 'releases']},
-            headers={'User-Agent': user_agent},
+            headers={'User-Agent': config['user_agent']},
         )
 
         if not r.is_success:
@@ -115,8 +115,8 @@ def main(args: list[str] | None = None) -> None:
 
     global_context = {
         'timestamp': last_sync or datetime.now(tz=UTC).strftime(TIME_FORMAT),
+        'static_prefix': config['static_prefix'],
         'res_dir_name': RES_NAME,
-        'static_prefix': static_prefix,
         'links_start': LINKS_NAME,
     }
 
