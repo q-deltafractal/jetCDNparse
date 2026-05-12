@@ -4,7 +4,7 @@
   <a href="https://www.python.org/">
     <img src="docs/badges/python.svg" height="28" alt="python3.11">
   </a>
-  <a href="https://github.com">
+  <a href="https://github.com/q-deltafractal/jetCDNparse">
     <img src="docs/badges/github.svg" height="28" alt="available on github">
   </a>
 </div>
@@ -23,6 +23,7 @@ _latest versions_
 ### preparation
 
 ```bash
+# clone repo
 git clone https://github.com/q-deltafractal/jetCDNparse.git
 cd jetCDNparse
 ```

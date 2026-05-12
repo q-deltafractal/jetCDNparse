@@ -1,4 +1,4 @@
-name: Deploy static content to Pages
+name: compile static
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
           STATIC_PREFIX: "/jetCDNparse"
         run: cd jetCDNparse && uv run main.py --verbose --static-prefix "/jetCDNparse"
 
-      - name: out deploy
+      - name: push
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

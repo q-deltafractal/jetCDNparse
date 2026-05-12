@@ -4,8 +4,9 @@ ruff = uvx ruff
 
 all: format run
 
-lint:
+check:
 	${ruff} check
+	${ruff} format --check
 format:
 	${ruff} check --fix
 	${ruff} format
