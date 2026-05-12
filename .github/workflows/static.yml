@@ -1,4 +1,4 @@
-name: Deploy static content to Pages
+name: compile static
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       - name: hello, uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
   
-      - name: setup dependencies
+      - name: install dependencies
         run: uv sync --all-extras
   
       - name: compile
@@ -31,7 +31,7 @@ jobs:
           STATIC_PREFIX: "/jetCDNparse"
         run: cd jetCDNparse && uv run main.py --verbose --static-prefix "/jetCDNparse"
 
-      - name: out deploy
+      - name: push
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
