@@ -23,7 +23,7 @@ jobs:
       - name: hello, uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
   
-      - name: setup dependencies
+      - name: install dependencies
         run: uv sync --all-extras
   
       - name: compile
