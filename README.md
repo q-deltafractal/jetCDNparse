@@ -4,6 +4,8 @@ a small JetBrains API parser
 
 <br>
 
+## compilation process
+
 ### requirements
 
 - [ ] [uv](https://docs.astral.sh/uv/) python package manager
