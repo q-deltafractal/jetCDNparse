@@ -1,6 +1,6 @@
 general = cd jetCDNparse && uv run main.py
 
-ruff = uvx ruff
+ruff = uv run --dev -m ruff
 
 all: format run
 
@@ -8,13 +8,13 @@ check:
 	${ruff} check
 	${ruff} format --check
 format:
-	${ruff} check --fix
 	${ruff} format
+	${ruff} check --fix
 
 run:
 	${general}
 run_force:
-	${general} --force
+	${general} -f
 
 server_test:
-	cd dist && uv run python -m http.server
+	cd dist && uv run -m http.server

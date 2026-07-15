@@ -1,24 +1,13 @@
 # jetCDNparse
 
-<div>
-  <a href="https://www.python.org/">
-    <img src="docs/badges/python.svg" height="28" alt="python3.11">
-  </a>
-  <a href="https://github.com/q-deltafractal/jetCDNparse">
-    <img src="docs/badges/github.svg" height="28" alt="available on github">
-  </a>
-</div>
+a small JetBrains API parser
 
-## compilation process
-
-_Linux-based systems_
+<br>
 
 ### requirements
 
 - [ ] [uv](https://docs.astral.sh/uv/) python package manager
 - [ ] [git](https://git-scm.com/install/) version control
-
-_latest versions_
 
 ### preparation
 

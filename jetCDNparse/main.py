@@ -11,6 +11,7 @@ from pathlib import Path
 import httpx
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+
 PROJECT_NAME = 'jetCDNparse'
 
 TIME_FORMAT = '%Y-%m-%dT%H:%M:%S%z'
@@ -90,7 +91,7 @@ def main() -> None:
     ):
         logger.info('making request')
 
-        r = httpx.get(
+        r: httpx.Response = httpx.get(
             url='https://data.services.jetbrains.com/products',
             params={'fields': ['name', 'releases']},
             headers={'User-Agent': config['user_agent']},
@@ -140,8 +141,8 @@ def main() -> None:
 
     item: dict
     for item in sorted(json_data, key=lambda a: a.get('name')):
-        name = item.get('name').replace(' ', '_')
-        releases = item.get('releases', tuple())
+        name: str = item.get('name').replace(' ', '_')
+        releases: list[dict] = item.get('releases', tuple())
 
         if releases:
             names.append(name)
