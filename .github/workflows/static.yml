@@ -22,18 +22,15 @@ jobs:
   
       - name: hello, uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
-  
-      - name: install dependencies
-        run: uv sync --all-extras
-  
+   
       - name: compile
         env:
           STATIC_PREFIX: "/jetCDNparse"
-        run: cd jetCDNparse && uv run main.py --verbose --static-prefix "/jetCDNparse"
+        run: cd jetCDNparse && uv run main.py --static-prefix "/jetCDNparse" -v
 
       - name: push
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./dist
           publish_branch: gh-pages	
