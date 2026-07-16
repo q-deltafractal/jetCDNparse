@@ -28,7 +28,7 @@ jobs:
 
       - name: compress
         run: | # all-inplace-verbose
-          docker run -it --rm \
+          docker run --rm \
             -v '$GITHUB_WORKSPACE':/source \
             -w /source \
             docker://tdewolff/minify:latest \
