@@ -24,9 +24,11 @@ jobs:
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
    
       - name: compile
-        env:
-          STATIC_PREFIX: "/jetCDNparse"
         run: cd jetCDNparse && uv run main.py --static-prefix "/jetCDNparse" -v
+
+      - name: compress
+        # this module uses blobs (minify.so), so i didnt add it as a dependency
+        run: uv tool run tdewolff-minify -aiv
 
       - name: push
         uses: peaceiris/actions-gh-pages@v4
