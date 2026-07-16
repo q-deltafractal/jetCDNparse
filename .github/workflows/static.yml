@@ -27,12 +27,12 @@ jobs:
         run: cd jetCDNparse && uv run main.py --static-prefix "/jetCDNparse" -v
 
       - name: compress
-        run: | # all-inplace-verbose
+        run: | # all-inplace-recursive-verbose
           docker run --rm \
             -v "$GITHUB_WORKSPACE":/source \
             -w /source \
             tdewolff/minify:latest \
-            -aiv .
+            -airv .
 
       - name: push
         uses: peaceiris/actions-gh-pages@v4
