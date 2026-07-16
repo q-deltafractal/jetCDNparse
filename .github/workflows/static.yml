@@ -27,8 +27,12 @@ jobs:
         run: cd jetCDNparse && uv run main.py --static-prefix "/jetCDNparse" -v
 
       - name: compress
-        # this module uses blobs (minify.so), so i didnt add it as a dependency
-        run: uv tool run tdewolff-minify -aiv
+        run: | # all-inplace-verbose
+          docker run -it --rm \
+            -v '$GITHUB_WORKSPACE':/source \
+            -w /source \
+            docker://tdewolff/minify:latest \
+            -aiv 
 
       - name: push
         uses: peaceiris/actions-gh-pages@v4
